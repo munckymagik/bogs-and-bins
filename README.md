@@ -1,3 +1,5 @@
+# Bogs and Bins
+
 To install:
 
 ```shell
@@ -10,3 +12,5 @@ To run:
 ```shell
 $ npm start
 ```
+
+Then open http://localhost:8080/ in your browser.
