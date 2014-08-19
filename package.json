@@ -1,0 +1,11 @@
+{
+  "name": "looviz",
+  "version": "0.1.0",
+  "description": "Find Litter Bins and Loos in Edinburgh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dan Munckton <daniel.munckton@neo.com>",
+  "license": "MIT"
+}
