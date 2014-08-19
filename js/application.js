@@ -1,6 +1,6 @@
 $(function() {
   // Create the map view
-  var map = L.map('map').setView([55.940104, -3.208988], 12);
+  var map = L.map('map').setView([55.940104, -3.208988], 11);
 
   // Connect some OpenStreet map tiles
   L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
