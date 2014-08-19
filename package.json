@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dan Munckton <daniel.munckton@neo.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "connect": "^2.25.7",
+    "serve-static": "^1.5.3"
+  }
 }
