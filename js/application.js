@@ -12,16 +12,24 @@ $(function() {
     dataType: 'json',
   });
 
+  var formatPopup = function(featureProps) {
+    var output = [];
+    output.push("<h2>" + featureProps.hotel + "</h2>");
+    output.push("<p>" + featureProps.owner + "</p>");
+
+    return output.join("");
+  };
+
   hotelsPromise.done(function (data) {
     var geoJson = jQuery.parseJSON(window.atob(data.content));
     // console.log(geoJson);
 
     L.geoJson(geoJson, {
-      style: function(feature) {
-        return { color: feature.properties.color };
-      },
+      // style: function(feature) {
+      //   return { color: feature.properties.color };
+      // },
       onEachFeature: function(feature, layer) {
-        layer.bindPopup(feature.properties.description);
+        layer.bindPopup(formatPopup(feature.properties));
       }
     }).addTo(map);
   });
