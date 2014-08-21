@@ -18,9 +18,24 @@
 
     <div id="map"></div>
 
+    <script id="bog-popup-template" type="text/x-handlebars-template">
+      <h2>{{Toilet}}</h2>
+      <dl>
+        <dt>Opening Times</dt><dd>{{getVarNameWithSpaces 'Opening_times'}}</dd>
+        <dt>Facilities</dt><dd>{{Facilities}}</dd>
+        <dt>Contact Details</dt>
+        <dd>
+          <address>{{Contact}}</address>
+          <address>Email: <a href="mailto:{{Email}}">{{Email}}</a></address>
+          <address>Tel: {{Telephone}}</address>
+        </dd>
+      </dl>
+    </script>
+
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/leaflet/dist/leaflet.js"></script>
     <script src="bower_components/csv2json/csv2json.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="js/CsvToGeoJson.js"></script>
     <script src="js/application.js"></script>
     <script>$(Application.run);</script>

@@ -1,4 +1,9 @@
 var Application = (function() {
+  Handlebars.registerHelper('getVarNameWithSpaces', function(variable) {
+    return this[variable.replace(/([_])/g, ' ')];
+  });
+  var bogPopupTemplate = Handlebars.compile($('#bog-popup-template').html());
+
   var run = function() {
     // Create the map view
     var map = L.map('map').setView([55.940104, -3.208988], 11);
@@ -13,21 +18,13 @@ var Application = (function() {
        dataType: 'json',
     });
 
-    var formatPopup = function(featureProps) {
-      var output = [];
-      output.push("<h2>" + featureProps.hotel + "</h2>");
-      output.push("<p>" + featureProps.owner + "</p>");
-
-      return output.join("");
-    };
-
     ajaxPromise.done(function (data) {
       var geoJson = CsvToGeoJson.fromString(window.atob(data.content), "Location");
 
       L.geoJson(geoJson, {
-        // onEachFeature: function(feature, layer) {
-        //   layer.bindPopup(formatPopup(feature.properties));
-        // },
+        onEachFeature: function(feature, layer) {
+          layer.bindPopup(bogPopupTemplate(feature.properties));
+        },
         coordsToLatLng: function(coords) {
           /*
            * Leaflet assumes GeoJson coords are [long,lat] and by default flips
