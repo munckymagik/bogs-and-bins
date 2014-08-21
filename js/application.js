@@ -8,9 +8,9 @@ var Application = (function() {
       attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
     }).addTo(map);
 
-    var hotelsPromise = $.ajax({
-      url: "https://api.github.com/repos/edinburghcouncil/datasets/contents/Hotels.geojson",
-      dataType: 'json',
+    var ajaxPromise = $.ajax({
+       url: "https://api.github.com/repos/edinburghcouncil/datasets/contents/Public conveniences.csv",
+       dataType: 'json',
     });
 
     var formatPopup = function(featureProps) {
@@ -21,16 +21,20 @@ var Application = (function() {
       return output.join("");
     };
 
-    hotelsPromise.done(function (data) {
-      var geoJson = jQuery.parseJSON(window.atob(data.content));
-      // console.log(geoJson);
+    ajaxPromise.done(function (data) {
+      var geoJson = CsvToGeoJson.fromString(window.atob(data.content), "Location");
 
       L.geoJson(geoJson, {
-        // style: function(feature) {
-        //   return { color: feature.properties.color };
+        // onEachFeature: function(feature, layer) {
+        //   layer.bindPopup(formatPopup(feature.properties));
         // },
-        onEachFeature: function(feature, layer) {
-          layer.bindPopup(formatPopup(feature.properties));
+        coordsToLatLng: function(coords) {
+          /*
+           * Leaflet assumes GeoJson coords are [long,lat] and by default flips
+           * them to [lat,long]. Our data is already in the correct order so no
+           * need to flip.
+           */
+          return coords;
         }
       }).addTo(map);
     });
