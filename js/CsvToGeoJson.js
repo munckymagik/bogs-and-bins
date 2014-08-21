@@ -41,9 +41,9 @@ var CsvToGeoJson = (function() {
       };
     },
 
-    convert: function(csvStr) {
+    convert: function(csvStr, geoDataFieldName) {
       var csvRows = csv2json.csv.parse(csvStr);
-      return self.convertRows(csvRows, "GeoData");
+      return self.convertRows(csvRows, geoDataFieldName);
     }
   };
 

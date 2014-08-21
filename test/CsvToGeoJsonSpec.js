@@ -3,11 +3,9 @@ describe('CsvToGeoJson', function() {
 
   describe('#convert', function() {
     it('converts csv records with geo data to geoJSON', function () {
-      var csvdata = "PropertyA,PropertyB,GeoData\n"
+      var csvdata = "PropertyA,PropertyB,GeoLocation\n"
                   + "Hello,World,\"1.234,-1.234\"";
-      var geoJsonData = CsvToGeoJson.convert(csvdata);
-
-      expect(geoJsonData).to.deep.equal({
+      var expected = {
         "type": "FeatureCollection",
         "features": [
           {
@@ -25,7 +23,9 @@ describe('CsvToGeoJson', function() {
             }
           }
         ]
-      });
+      };
+
+      expect(CsvToGeoJson.convert(csvdata, "GeoLocation")).to.deep.equal(expected);
     });
   });
 
