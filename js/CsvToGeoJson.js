@@ -34,16 +34,16 @@ var CsvToGeoJson = (function() {
       });
     },
 
-    convertRows: function(csvRows, geoDataFieldName) {
+    fromJson: function(csvRows, geoDataFieldName) {
       return {
         "type": "FeatureCollection",
         "features": self.parseFeatures(csvRows, geoDataFieldName)
       };
     },
 
-    convert: function(csvStr, geoDataFieldName) {
+    fromString: function(csvStr, geoDataFieldName) {
       var csvRows = csv2json.csv.parse(csvStr);
-      return self.convertRows(csvRows, geoDataFieldName);
+      return self.fromJson(csvRows, geoDataFieldName);
     }
   };
 
