@@ -9,6 +9,15 @@
     #map {
       min-height: 600px;
     }
+    .bog-popup__prop-list address {
+      font-style: normal;
+    }
+    .bog-popup__prop-list dt {
+      font-weight: bold;
+    }
+    .bog-popup__prop-list dd {
+      margin-left: 12px;
+    }
     </style>
   </head>
   <body>
@@ -19,17 +28,19 @@
     <div id="map"></div>
 
     <script id="bog-popup-template" type="text/x-handlebars-template">
-      <h2>{{Toilet}}</h2>
-      <dl>
-        <dt>Opening Times</dt><dd>{{getVarNameWithSpaces 'Opening_times'}}</dd>
-        <dt>Facilities</dt><dd>{{Facilities}}</dd>
-        <dt>Contact Details</dt>
-        <dd>
-          <address>{{Contact}}</address>
-          <address>Email: <a href="mailto:{{Email}}">{{Email}}</a></address>
-          <address>Tel: {{Telephone}}</address>
-        </dd>
-      </dl>
+      <div class="bog-popup">
+        <h2>{{Toilet}}</h2>
+        <dl class="bog-popup__prop-list">
+          <dt>Opening Times</dt><dd>{{getVarNameWithSpaces 'Opening_times'}}</dd>
+          <dt>Facilities</dt><dd>{{Facilities}}</dd>
+          <dt>Contact Details</dt>
+          <dd>
+            <address>{{Contact}}</address>
+            <address>Email: <a href="mailto:{{Email}}">{{Email}}</a></address>
+            <address>Tel: {{Telephone}}</address>
+          </dd>
+        </dl>
+      </div>
     </script>
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
