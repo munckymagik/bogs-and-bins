@@ -1,10 +1,12 @@
 var Application = (function() {
-  Handlebars.registerHelper('getVarNameWithSpaces', function(variable) {
-    return this[variable.replace(/([_])/g, ' ')];
-  });
-  var bogPopupTemplate = Handlebars.compile($('#bog-popup-template').html());
-
   var run = function() {
+    Handlebars.registerHelper('getVarNameWithSpaces', function(variable) {
+      return this[variable.replace(/([_])/g, ' ')];
+    });
+
+    // Setup Handlebars templates
+    var bogPopupTemplate = Handlebars.compile($('#bog-popup-template').html());
+
     // Create the map view
     var map = L.map('map').setView([55.940104, -3.208988], 11);
 
