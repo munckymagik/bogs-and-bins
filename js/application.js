@@ -1,12 +1,11 @@
 var Application = (function() {
-  var run = function() {
+  var initHandleBars = function() {
     Handlebars.registerHelper('getVarNameWithSpaces', function(variable) {
       return this[variable.replace(/([_])/g, ' ')];
     });
+  };
 
-    // Setup Handlebars templates
-    var bogPopupTemplate = Handlebars.compile($('#bog-popup-template').html());
-
+  var createMap = function() {
     // Create the map view
     var map = L.map('map').setView([55.940104, -3.208988], 11);
 
@@ -15,13 +14,27 @@ var Application = (function() {
       attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
     }).addTo(map);
 
-    var ajaxPromise = $.ajax({
-       url: "https://api.github.com/repos/edinburghcouncil/datasets/contents/Public conveniences.csv",
-       dataType: 'json',
-    });
+    return map;
+  };
 
-    ajaxPromise.done(function (data) {
-      var geoJson = CsvToGeoJson.fromString(window.atob(data.content), "Location");
+  var getGitHubDocument = function(user, repo, file, handleData) {
+    return $.ajax({
+       url: "https://api.github.com/repos/" + user + "/" + repo + "/contents/" + file,
+       dataType: 'json',
+    }).done(function (response) {
+      handleData(window.atob(response.content));
+    });
+  };
+
+  var getEdinCouncilDocument = function(file, handleData) {
+    return getGitHubDocument('edinburghcouncil', 'datasets', file, handleData);
+  };
+
+  var addBogs = function(map) {
+    var bogPopupTemplate = Handlebars.compile($('#bog-popup-template').html());
+
+    getEdinCouncilDocument('Public conveniences.csv', function (data) {
+      var geoJson = CsvToGeoJson.fromString(data, "Location");
 
       L.geoJson(geoJson, {
         onEachFeature: function(feature, layer) {
@@ -37,9 +50,14 @@ var Application = (function() {
         }
       }).addTo(map);
     });
-  }
+  };
 
   return {
-    run: run
+    run: function() {
+      initHandleBars();
+
+      var map = createMap();
+      addBogs(map);
+    }
   };
 })();
